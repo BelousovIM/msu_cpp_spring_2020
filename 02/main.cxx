@@ -9,37 +9,48 @@ static bool t_end;
 static bool t_num;
 static bool t_word;
 static std::string simbol;
+static std::vector<int> v_num;
 
 // индикатор входа (колбэк)
-void is_started()
+auto is_started()
 {
 	t_start = true;
 }
 // индикатор выхода (колбэк)
-void is_ended()
+auto is_ended()
 {
 	t_end = true;
 }
 // индикатор запуска счетчика и количество чисел (колбэк)
-void N_counter(const std::string s)
+auto N_counter(const std::string &s)
 {
 	t_num = true;
 	n_count++;
 }
 // индикатор запуска счетчика и количество слов (колбэк)
-void W_counter(const std::string s)
+auto W_counter(const std::string &s)
 {
 	t_word = true;
 	w_count++;
 }
 // максимальная длина и слово/число максимальной длины (колбэк)
-void length(const std::string s)
+auto length(const std::string &s)
 {
 	if (s.size() > max_length)
 	{
 		max_length = s.size();
 		simbol = s;
 	}
+}
+
+auto create_vec_num(const std::string &s)
+{
+    int num = 0;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        num = num*10 + (s[i]-'0');
+    }
+    v_num.push_back(num);
 }
 int main()
 {
@@ -70,7 +81,7 @@ int main()
 		std::cout << "BAD2" << std::endl;
 		return 1;
 	}
-	
+
 	//------------------------------------------------------------------
 	t_start = false;
 	t_end = false;
@@ -80,7 +91,7 @@ int main()
 	w_count = 0;
 	
 	parser("123\n\t abc rac 1\n\n 4 5 dfg",
-	is_started, [](){}, [](const std::string){}, W_counter);
+	is_started, [](){}, [](const std::string &){}, W_counter);
 	if (!t_start or t_end or t_num or !t_word or 
 		n_count!= 0 or w_count!= 3)
 	{
@@ -92,7 +103,6 @@ int main()
 	t_start = false;
 	max_length = 0;
 	simbol = "";
-    
 	parser("123 abc rac 1 4 5 dfg abcdefg\t 43abcdefg123",
 	is_started, [](){}, length, length);
 	if (!t_start or max_length!=7 or simbol!="abcdefg" )
@@ -100,6 +110,20 @@ int main()
 		std::cout << "BAD4" << std::endl;
 		return 1;
 	}
+
+	//------------------------------------------------------------------
+	
+	v_num.clear();
+	int v_test[4] = {123, 1, 4, 5};
+	parser("123 abc rac 1 4 5 dfg abcdefg\t 43abcdefg123",
+	[](){}, [](){}, create_vec_num);
+	
+	for (int i = 0; i < 4; ++i)
+		if (v_num.size()!= 4 or v_num[i]!=v_test[i])
+		{
+			std::cout << "BAD5" << std::endl;
+			return 1;
+		}
 
 	std::cout<< "ALL TESTS ARE SUCCESFULL" << std::endl;
 
