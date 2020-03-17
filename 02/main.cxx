@@ -52,6 +52,7 @@ auto create_vec_num(const std::string &s)
     }
     v_num.push_back(num);
 }
+
 int main()
 {
 	t_start = false;
@@ -59,6 +60,7 @@ int main()
 	
 	parser("1 a 2 b 3 c 4 d 5 e 12 ab 23 bc 34 cd 45 de 123 abc",
 	is_started, is_ended);
+	
 	if (!t_start or !t_end)
 	{
 		std::cout << "BAD1" << std::endl;
@@ -75,6 +77,7 @@ int main()
 	
 	parser("1 a 2 b 3 c\n 4 d 5e 12 \nab 23 bc 34 cd\t 45de 123 abc",
 	is_started, is_ended, N_counter, W_counter);
+	
 	if (!t_start or !t_end or !t_num or !t_word or
 		n_count!= 8 or w_count!= 8)
 	{
@@ -92,6 +95,7 @@ int main()
 	
 	parser("123\n\t abc rac 1\n\n 4 5 dfg",
 	is_started, [](){}, [](const std::string &){}, W_counter);
+	
 	if (!t_start or t_end or t_num or !t_word or 
 		n_count!= 0 or w_count!= 3)
 	{
@@ -100,12 +104,14 @@ int main()
 	}
 	
 	//------------------------------------------------------------------
-	t_start = false;
+	int a = 10;
 	max_length = 0;
 	simbol = "";
+	
 	parser("123 abc rac 1 4 5 dfg abcdefg\t 43abcdefg123",
-	is_started, [](){}, length, length);
-	if (!t_start or max_length!=7 or simbol!="abcdefg" )
+	[&a](){a = 4;}, [](){}, length, length);
+	
+	if (a!=4 or max_length!=7 or simbol!="abcdefg" )
 	{
 		std::cout << "BAD4" << std::endl;
 		return 1;
@@ -115,6 +121,7 @@ int main()
 	
 	v_num.clear();
 	int v_test[4] = {123, 1, 4, 5};
+	
 	parser("123 abc rac 1 4 5 dfg abcdefg\t 43abcdefg123",
 	[](){}, [](){}, create_vec_num);
 	

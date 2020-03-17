@@ -7,8 +7,8 @@
 #include <functional> 
 #include <vector>
 
-using onItem = void (*)(const std::string &);
-using onPart = void (*)();
+using onItem = std::function<void(const std::string &)>;
+using onPart = std::function<void()>;
 
 
 
