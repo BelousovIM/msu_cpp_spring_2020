@@ -7,15 +7,15 @@
 #include <functional> 
 #include <vector>
 
-using onItem = std::function<void(const std::string &)>;
 using onPart = std::function<void()>;
+using typeNumber = std::function<void(const int &)>;
+using typeText = std::function<void(const std::string &)>;
 
-
-
+int create_num(const std::string &);
 void parser(const std::string &, onPart onStart = [](){}, 
 			onPart onEnd = [](){},
-			onItem onNumber = [](const std::string &){},
-			onItem onText = [](const std::string &){});
+			typeNumber onNumber = [](const int &){},
+			typeText onText = [](const std::string &){});
 
 bool digit(const std::string &);
 bool alpha(const std::string &);

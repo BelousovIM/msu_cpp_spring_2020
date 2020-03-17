@@ -1,15 +1,5 @@
 #include "functions.h"
 
-int create_num(const std::string &s)
-{
-    int num = 0;
-    for (int i = 0; i < s.size(); ++i)
-    {
-        num = num*10 + (s[i]-'0');
-    }
-    return num;
-}
-
 int main()
 {
 	int t_start = false;
@@ -29,7 +19,7 @@ int main()
 	t_start = false;
 	int n_count = 0;
 	int w_count = 0;
-	auto N_counter = [&n_count](const std::string &){n_count++;};
+	auto N_counter = [&n_count](const int &){n_count++;};
 	auto W_counter = [&w_count](const std::string &){w_count++;};
 	
 	parser("1 a 2 b 3 c\n 4 d 5e 12 \nab 23 bc 34 cd\t 45de 123 abc",
@@ -44,7 +34,14 @@ int main()
 	//------------------------------------------------------------------
 	int a = 10;
 	int max_length = 0;
+	int max_num = 0;
 	std::string simbol = "";
+	auto max_number = [&max_num](const int & num)
+	{
+		if (num > max_num)
+			max_num = num;
+	};
+		
 	auto length = [&max_length, &simbol](const std::string &s)
 	{
 		if (s.size() > max_length)
@@ -55,9 +52,9 @@ int main()
 	};
 	
 	parser("123 abc rac 1 4 5 dfg abcdefg\t 43abcdefg123",
-	[&a](){a = 4;}, [](){}, length, length);
+	[&a](){a = 4;}, [](){}, max_number, length);
 	
-	if (a!=4 or max_length!=7 or simbol!="abcdefg" )
+	if (a!=4 or max_length!=7 or simbol!="abcdefg" or max_num!=123)
 	{
 		std::cout << "BAD3" << std::endl;
 		return 1;
@@ -69,7 +66,7 @@ int main()
 	
 	parser("123 abc rac 1 4 5 dfg abcdefg\t 43abcdefg123",
 	[](){}, [](){}, 
-	[&v_num](const std::string &s){v_num.push_back(create_num(s));});
+	[&v_num](const int &v){v_num.push_back(v);});
 	
 	for (int i = 0; i < 4; ++i)
 		if (v_num.size()!= 4 or v_num[i]!=v_test[i])

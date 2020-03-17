@@ -1,7 +1,8 @@
 #include "functions.h"
 
 void parser(const std::string &s, onPart onStart, onPart onEnd,
-			onItem onNumber, onItem onText
+			typeNumber onNumber, 
+			typeText onText
 			)
 {
 	onStart();
@@ -10,7 +11,7 @@ void parser(const std::string &s, onPart onStart, onPart onEnd,
 	while (ss >> str)
 	{
 		if (digit(str))
-			onNumber(str);
+			onNumber(create_num(str));
 		else if (alpha(str))
 			onText(str);
 	}
@@ -34,5 +35,15 @@ bool alpha(const std::string &s)
 			return false;
 
 	return true;
+}
+
+int create_num(const std::string &s)
+{
+    int num = 0;
+    for (int i = 0; i < s.size(); ++i)
+    {
+        num = num*10 + (s[i]-'0');
+    }
+    return num;
 }
 
