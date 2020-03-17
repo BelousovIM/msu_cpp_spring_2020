@@ -1,6 +1,6 @@
 #include "functions.h"
 
-auto create_num(const std::string &s)
+int create_num(const std::string &s)
 {
     int num = 0;
     for (int i = 0; i < s.size(); ++i)
