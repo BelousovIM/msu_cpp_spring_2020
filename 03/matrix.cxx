@@ -1,7 +1,5 @@
 #include "functions.h"
 
-using namespace std;
-
 Row::Row(const size_t& length, int* row)
 {
 	Row_length = length;
@@ -72,26 +70,26 @@ bool Matrix::operator==(const Matrix& A) const
 	if (A.columns != columns or A.rows != rows)
 		return false;
 
-    for(int i=0; i<rows; i++)
-        for(int j=0; j<columns; j++)
+	for(int i=0; i<rows; i++)
+		for(int j=0; j<columns; j++)
 			if((*this)[i][j] != A[i][j])
-                return false;
+				return false;
 
 	return true;
 }
 
 bool Matrix::operator!=(const Matrix& A) const
 {
-    return !(*this == A);
+	return !(*this == A);
 }
 
 const size_t& Matrix::getColumns() const
 {
-    return columns;
+	return columns;
 }
 
 const size_t& Matrix::getRows() const
 {
-    return rows;
+	return rows;
 }
 

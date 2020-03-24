@@ -18,7 +18,7 @@ main()
 		for(int j=0; j < X.getColumns(); ++j)
 			X[i][j] = 3;
 
-    X *= 5;
+	X *= 5;
 
 	for(int i=0; i < X.getRows(); ++i)
 		for(int j=0; j < X.getColumns(); ++j)
@@ -44,23 +44,23 @@ main()
 	}
 	
 	//------------------------------------------------------------------
-	bool ind = false;
-    try
-    {
-        X[123][123];
-    }
+	bool flag = false;
+	try
+	{
+		X[123][123];
+	}
 
-    catch(const std::out_of_range& out_of_rage)
-    {
-        ind = true;
-    }
+	catch(const std::out_of_range&)
+	{
+		flag = true;
+	}
     
-    if(!ind)
+	if(!flag)
 	{
 		std::cout << "BAD4" << std::endl;
 		return 1;
 	}
 	
-    std::cout << "ALL TESTS ARE SUCCESFULL" << std::endl;
-    return 0;
+	std::cout << "ALL TESTS ARE SUCCESFULL" << std::endl;
+	return 0;
 }
