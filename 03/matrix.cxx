@@ -1,12 +1,12 @@
 #include "functions.h"
 
-Row::Row(const size_t& length, int* row)
+Row::Row(size_t length, int* row)
 {
 	Row_length = length;
 	Matrix_row = row;
 }
 
-const int& Row::operator[](const size_t& j) const
+const int& Row::operator[](size_t j) const
 {
 	if(j >= Row_length)
 		throw std::out_of_range("");
@@ -14,7 +14,7 @@ const int& Row::operator[](const size_t& j) const
 		return Matrix_row[j];
 }
 
-int& Row::operator[](const size_t& j)
+int& Row::operator[](size_t j)
 {
 	if(j >= Row_length)
 		throw std::out_of_range("");
@@ -23,7 +23,7 @@ int& Row::operator[](const size_t& j)
 }
 
 
-Matrix::Matrix(const size_t& rows_arg, const size_t& columns_arg)
+Matrix::Matrix(size_t rows_arg, size_t columns_arg)
 {
 	rows = rows_arg;
 	columns = columns_arg;
@@ -34,11 +34,11 @@ Matrix::Matrix(const size_t& rows_arg, const size_t& columns_arg)
 
 Matrix::~Matrix()
 {
-	for(int i = 0; i < rows; ++i) 
+	for(size_t i = 0; i < rows; ++i) 
 		delete[] matrix[i];
 }
 
-const Row Matrix::operator[](const size_t& i) const
+const Row Matrix::operator[](size_t i) const
 {
     if(i >= rows)
 		throw std::out_of_range("");
@@ -46,7 +46,7 @@ const Row Matrix::operator[](const size_t& i) const
 		return Row(columns, matrix[i]);
 }
 
-Row Matrix::operator[](const size_t& i) 
+Row Matrix::operator[](size_t i) 
 {
     if(i >= rows)
 		throw std::out_of_range("");
@@ -56,8 +56,8 @@ Row Matrix::operator[](const size_t& i)
 
 Matrix& Matrix::operator*=(const int& coef)
 {
-	for(int i=0; i<rows; ++i)
-		for(int j=0; j<columns; ++j)
+	for(size_t i=0; i<rows; ++i)
+		for(size_t j=0; j<columns; ++j)
 			matrix[i][j] *= coef;
 	return *this;
 }
@@ -70,8 +70,8 @@ bool Matrix::operator==(const Matrix& A) const
 	if (A.columns != columns or A.rows != rows)
 		return false;
 
-	for(int i=0; i<rows; i++)
-		for(int j=0; j<columns; j++)
+	for(size_t i=0; i<rows; ++i)
+		for(size_t j=0; j<columns; ++j)
 			if((*this)[i][j] != A[i][j])
 				return false;
 
@@ -83,12 +83,12 @@ bool Matrix::operator!=(const Matrix& A) const
 	return !(*this == A);
 }
 
-const size_t& Matrix::getColumns() const
+size_t Matrix::getColumns() const
 {
 	return columns;
 }
 
-const size_t& Matrix::getRows() const
+size_t Matrix::getRows() const
 {
 	return rows;
 }

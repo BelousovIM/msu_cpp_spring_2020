@@ -9,9 +9,9 @@ class Row
 	size_t Row_length;
 
 	public:
-		Row(const size_t&, int*);
-		const int& operator[](const size_t&) const;
-		int& operator[](const size_t&);
+		Row(size_t, int*);
+		const int& operator[](size_t) const;
+		int& operator[](size_t);
 };
 
 class Matrix
@@ -22,14 +22,14 @@ class Matrix
 
 	public:
 
-		Matrix(const size_t&, const size_t&);
+		Matrix(size_t, size_t);
 		~Matrix();
-		const Row operator[](const size_t&) const;
-		Row operator[](const size_t&);
+		const Row operator[](size_t) const;
+		Row operator[](size_t);
 		Matrix& operator*=(const int&);
 		bool operator==(const Matrix&) const;
 		bool operator!=(const Matrix&) const;
-		const size_t& getRows() const;
-		const size_t& getColumns() const;
+		size_t getRows() const;
+		size_t getColumns() const;
 
 };

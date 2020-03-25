@@ -14,14 +14,14 @@ main()
 	}
 	
 	//------------------------------------------------------------------
-	for(int i=0; i < X.getRows(); ++i)
-		for(int j=0; j < X.getColumns(); ++j)
+	for(size_t i=0; i < X.getRows(); ++i)
+		for(size_t j=0; j < X.getColumns(); ++j)
 			X[i][j] = 3;
 
 	X *= 5;
 
-	for(int i=0; i < X.getRows(); ++i)
-		for(int j=0; j < X.getColumns(); ++j)
+	for(size_t i=0; i < X.getRows(); ++i)
+		for(size_t j=0; j < X.getColumns(); ++j)
 			if(X[i][j] != 15)
 			{
 				std::cout << "BAD2" << std::endl;
@@ -30,8 +30,8 @@ main()
 			
 	//------------------------------------------------------------------
 	Matrix A(rows, columns), B(rows, columns);
-	for(int i=0; i < A.getRows(); ++i)
-		for(int j=0; j < A.getColumns(); ++j)
+	for(size_t i=0; i < A.getRows(); ++i)
+		for(size_t j=0; j < A.getColumns(); ++j)
 		{
 			A[i][j] = 15;
 			B[i][j] = 123;
