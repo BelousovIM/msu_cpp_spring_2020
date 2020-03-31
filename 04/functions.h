@@ -12,28 +12,28 @@ enum class Error
 
 struct Data
 {
-    uint64_t a;
-    bool b;
-    uint64_t c;
+	uint64_t a;
+	bool b;
+	uint64_t c;
 
-    Data(uint64_t a, bool b, uint64_t c)
-        : a(a)
-        , b(b)
-        , c(c)
-    {
-    }
+	Data(uint64_t a, bool b, uint64_t c)
+		: a(a)
+		, b(b)
+		, c(c)
+	{
+	}
 
-    template <class Serializer>
-    Error serialize(Serializer& serializer)
-    {
-        return serializer(a, b, c);
-    }
+	template <class Serializer>
+	Error serialize(Serializer& serializer)
+	{
+		return serializer(a, b, c);
+	}
 
-    template <class Deserializer>
-    Error deserialize(Deserializer& deserializer)
-    {
-        return deserializer(a, b, c);
-    }
+	template <class Deserializer>
+	Error deserialize(Deserializer& deserializer)
+	{
+		return deserializer(a, b, c);
+	}
 };
 
 class Serializer
