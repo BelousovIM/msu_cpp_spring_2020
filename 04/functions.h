@@ -10,31 +10,6 @@ enum class Error
 	CorruptedArchive
 };
 
-struct Data
-{
-	uint64_t a;
-	bool b;
-	uint64_t c;
-
-	Data(uint64_t a, bool b, uint64_t c)
-		: a(a)
-		, b(b)
-		, c(c)
-	{
-	}
-
-	template <class Serializer>
-	Error serialize(Serializer& serializer)
-	{
-		return serializer(a, b, c);
-	}
-
-	template <class Deserializer>
-	Error deserialize(Deserializer& deserializer)
-	{
-		return deserializer(a, b, c);
-	}
-};
 
 class Serializer
 {
@@ -55,33 +30,33 @@ public:
 	}
 
 	template <class... ArgsT>
-	Error operator()(ArgsT... args)
+	Error operator()(ArgsT&&... args)
 	{
-		return process(args...);
+		return process(std::forward<ArgsT>(args)...);
 	}
 
 private:
     
 	template <class T>
-	Error process(T arg) 
+	Error process(T&& arg) 
 	{
-		return saveStream(arg);
+		return saveStream(std::forward<T>(arg));
 	}
 	    
 	template <class T, class... ArgsT>
-	Error process(T arg, ArgsT... args) 
+	Error process(T&& arg, ArgsT&&... args) 
 	{
-		if (saveStream(arg) != Error::NoError)
+		if (saveStream(std::forward<T>(arg)) != Error::NoError)
 		{
 			return Error::CorruptedArchive;
 		}
-		return process(args...);
+		return process(std::forward<ArgsT>(args)...);
 	}
 		
 	template <class T>
 	Error saveStream(T val)
 	{
-		if(std::is_same<T, bool>::value)
+		if constexpr (std::is_same<T, bool>::value)
 		{
 			if (val)
 			{
@@ -92,7 +67,7 @@ private:
 				out_ << "false" << Serializer::Separator;
 			}
 		}
-		else if(std::is_same<T, uint64_t>::value)
+		else if constexpr (std::is_same<T, uint64_t>::value)
 		{
 			out_ << val << Serializer::Separator;
 		}
@@ -131,7 +106,7 @@ private:
 	{
 		std::string str;
 		in_ >> str;
-		if(std::is_same<T, bool>::value)
+		if constexpr (std::is_same<T, bool>::value)
 		{
 			if (str == "true")
 			{
@@ -147,7 +122,7 @@ private:
 			}
 			return Error::NoError;
 		}
-		else if(std::is_same<T, uint64_t>::value)
+		else if constexpr (std::is_same<T, uint64_t>::value)
 		{
 
 			if (str.length() == 0)
