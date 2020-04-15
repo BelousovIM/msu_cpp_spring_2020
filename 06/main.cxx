@@ -39,7 +39,7 @@ int main()
 	}
 	assert(error);
 	
-		error = false;
+	error = false;
 	try
 	{
 		auto t = format("{1}", 1);
