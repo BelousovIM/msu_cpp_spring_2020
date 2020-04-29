@@ -22,9 +22,9 @@ int main ()
 	auto task2 = pool.exec([]() { return 10; });
 	std::cout << task2.get() << std::endl;
 	
-    for (int i = 0; i <= 10; ++i)
-    {
-        std::cout << pool.exec([i](){ return i;}).get() << " ";
-    }
-    std::cout << "\n";
+	for (int i = 0; i <= 10; ++i)
+	{
+		std::cout << pool.exec([i](){ return i;}).get() << " ";
+	}
+	std::cout << "\n";
 }
